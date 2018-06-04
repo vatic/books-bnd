@@ -1,6 +1,10 @@
-const methods = require('methods')
 const _ = require('koa-route')
 const Koa = require('koa')
+
+const {
+    getAll,
+    getById,
+} = require('./src/db/dao/book')
 
 const app = new Koa()
 
@@ -22,34 +26,23 @@ app.use(async (ctx, next) => {
     console.log(`${ctx.method} ${ctx.url} - ${ms}`)
 })
 
-const db = {
-    tobi: { name: 'tobi', species: 'ferret' },
-    loki: { name: 'loki', species: 'ferret' },
-    jane: { name: 'jane', species: 'ferret' },
-}
-
-const pets = {
-    list: (ctx) => {
+const booksController = {
+    list: async (ctx) => {
+        const books = await getAll()
         ctx.type = 'application/json; charset=utf-8'
-        ctx.body = db
+        ctx.body = books
     },
 
-    show: (ctx, name) => {
-        const pet = db[name]
-        if (!pet) return ctx.throw('cannot find that pet', 404)
+    show: async (ctx, id) => {
+        const book = await getById(id)
+        if (!book) return ctx.throw('cannot find that book', 404)
         ctx.type = 'application/json; charset=utf-8'
-        ctx.body = pet
+        ctx.body = book
     },
 }
 
-app.use(_.get('/pets', pets.list))
-app.use(_.get('/pets/:name', pets.show))
-app.use(_.get('/methods', methods))
+app.use(_.get('/books', booksController.list))
+app.use(_.get('/books/:id', booksController.show))
 
-
-app.use(async (ctx) => {
-    ctx.type = 'application/json; charset=utf-8'
-    ctx.body = { msg: 'Hello world' }
-})
 
 app.listen(3000)
