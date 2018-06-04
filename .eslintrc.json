@@ -1,0 +1,36 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 2017,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": false
+        }
+    },
+    "plugins": [
+        "mocha"
+    ],
+    "extends": [
+        "airbnb-base"
+    ],
+    "rules": {
+        "no-underscore-dangle": "off",
+        "semi": [
+            "error",
+            "never"
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "consistent-return": 2,
+        "no-multi-spaces": [
+            "error",
+            {
+                "exceptions": {
+                    "Property": true,
+                    "VariableDeclarator": true
+                }
+            }
+        ]
+    }
+}

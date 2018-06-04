@@ -1,0 +1,12 @@
+node_modules
+dist
+.idea
+.vscode
+.nyc_output
+coverage
+.editorconfig
+npm-debug.log
+.projections.json
+*.swo
+*.swn
+*.swp
